@@ -697,6 +697,7 @@ namespace Game
             this.page2_namelist.Name = "page2_namelist";
             this.page2_namelist.Size = new System.Drawing.Size(205, 124);
             this.page2_namelist.TabIndex = 3;
+            this.page2_namelist.UsedImage = null;
             // 
             // page2_names_add
             // 
@@ -1045,6 +1046,7 @@ namespace Game
             this.page3_names.Name = "page3_names";
             this.page3_names.Size = new System.Drawing.Size(203, 86);
             this.page3_names.TabIndex = 3;
+            this.page3_names.UsedImage = null;
             // 
             // page3_names_add
             // 
@@ -1084,6 +1086,7 @@ namespace Game
             this.page3_needlist.Name = "page3_needlist";
             this.page3_needlist.Size = new System.Drawing.Size(204, 90);
             this.page3_needlist.TabIndex = 7;
+            this.page3_needlist.UsedImage = null;
             // 
             // label114
             // 
@@ -3125,7 +3128,7 @@ namespace Game
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form1";
-            this.Text = "Browsergame Manager";
+            this.Text = "Game Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.tabControl1.ResumeLayout(false);
