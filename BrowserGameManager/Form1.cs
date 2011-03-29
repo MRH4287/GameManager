@@ -37,7 +37,7 @@ namespace Game
 
         #region System
 
-        Config config = new Config();
+        Data.Config config = new Data.Config("Config/config.xml");
 
         public Form1()
         {

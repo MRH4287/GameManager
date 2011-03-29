@@ -71,7 +71,6 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Config\Config.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -290,6 +289,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Data">
+      <HintPath>..\Lib\Data.dll</HintPath>
+    </Reference>
     <Reference Include="Encryption">
       <HintPath>..\Lib\Encryption.dll</HintPath>
     </Reference>
@@ -316,9 +318,6 @@
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XML">
-      <HintPath>..\Lib\XML.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Action\" />
