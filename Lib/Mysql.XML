@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mysql</name>
+    </assembly>
+    <members>
+        <member name="T:Mysql.Query">
+            <summary>
+            Stellt eine MySql Query dar
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.Prefix">
+            <summary>
+            Der Prefix, der verwendet werden soll
+            </summary>
+        </member>
+        <member name="M:Mysql.Query.Select(System.String,System.String)">
+            <summary>
+            Erstellt eine neue Datenabfrage
+            </summary>
+            <param name="table">Die Tabelle, die abgefragt werden soll</param>
+            <param name="data">Welche Spalten sollen abgefragt werden</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Update(System.String)">
+            <summary>
+            Erstellt eine neue Datenaktualiserungsabfrage
+            </summary>
+            <param name="table">Die Tabelle, die aktualisiert werden soll</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Insert(System.String)">
+            <summary>
+            Erstellt eine neue Dateneinfügeabfrage
+            </summary>
+            <param name="table">Die Tabelle, in die Daten eingefügt werden soll</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Replace(System.String)">
+            <summary>
+            Erstellt eine neue Datenersetzungsabfrage
+            </summary>
+            <param name="table">Die Tabelle, in die Daten eingefügt werden soll</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Delete(System.String)">
+            <summary>
+            Erstellt eine neue Datenlöschabfrage
+            </summary>
+            <param name="table">Tabelle, als der Daten gelöscht werden soll</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Where(System.String,System.String,System.Nullable{Mysql.Query.ConditionType})">
+            <summary>
+            Erstellt eine neue Bedingung für eine Abfrage
+            </summary>
+            <param name="key">Die zu Überprüfende Spalte</param>
+            <param name="value">Der zu Überprüfende Wert</param>
+            <param name="type">Der Typ der Abfrage [Default: Equals]</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Where(System.Collections.Generic.IEnumerable{Mysql.Query.Condition})">
+            <summary>
+            Erstellt eine neue Bedingung für eine Abfrage
+            </summary>
+            <param name="conditions">Liste aus Bedingungen</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Where(Mysql.Query.Condition)">
+            <summary>
+            Erstellt eine neue Bedingung für eine Abfrage
+            </summary>
+            <param name="cond">Bedingung</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Set(System.String,System.String)">
+            <summary>
+            Setzt Daten für eine Abfrage
+            </summary>
+            <param name="key">Schlüssel</param>
+            <param name="value">Wert</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.Set(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Setzt Daten für eine Abfrage
+            </summary>
+            <param name="values">Dictionary aus Werten</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.OrderBy(System.String,Mysql.Query.Order)">
+            <summary>
+            Sortiert die Ausgabe nach einem bestimmtem Schlüssel
+            </summary>
+            <param name="key">Schlüssel nach dem sortiert werden soll</param>
+            <param name="order">Sortierung</param>
+            <returns>Query Objekt</returns>
+        </member>
+        <member name="M:Mysql.Query.execute(Mysql.MysqlConnection)">
+            <summary>
+            Führt das erstellte Query aus
+            </summary>
+            <param name="connection">Die MySQL Datenverbindung</param>
+            <returns>MySqlDataReader</returns>
+        </member>
+        <member name="P:Mysql.Query.SQL">
+            <summary>
+            Der resultierende SQL Befehl
+            </summary>
+        </member>
+        <member name="T:Mysql.Query.QueryType">
+            <summary>
+            Die verschiedenen Typen einer Abfrage
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.QueryType.SELECT">
+            <summary>
+            Das Abfragen von Daten
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.QueryType.UPDATE">
+            <summary>
+            Das Aktualisieren von Daten
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.QueryType.INSERT">
+            <summary>
+            Das einfügen von Daten
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.QueryType.REPLACE">
+            <summary>
+            Das ersetzen von Daten
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.QueryType.DELETE">
+            <summary>
+            Das löschen von Daten
+            </summary>
+        </member>
+        <member name="T:Mysql.Query.ConditionType">
+            <summary>
+            Die Verschiedenen Vergleichsarten
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.ConditionType.Equals">
+            <summary>
+            Prüft ob ein Wert gleich einem anderem ist
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.ConditionType.NotEquals">
+            <summary>
+            Prüft ob ein Wert ungleich einem anderem ist
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.ConditionType.Greather">
+            <summary>
+            Prüft ob ein Wert größer als ein anderer ist
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.ConditionType.GreatherOrEquals">
+            <summary>
+            Prüft ob ein Wert größer oder gleich einem anderem ist
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.ConditionType.Less">
+            <summary>
+            Prüft ob ei Wert kleiner als ein anderer ist
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.ConditionType.LessOrEquals">
+            <summary>
+            PRüft ob ein Wert kleiner oder gleich einem anderem ist
+            </summary>
+        </member>
+        <member name="T:Mysql.Query.Order">
+            <summary>
+            Die Reihenfolge einer Sortierung
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.Order.ASC">
+            <summary>
+            In der richtigen Reihenfolge
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.Order.DESC">
+            <summary>
+            Gegen die richtige Reihenfolge
+            </summary>
+        </member>
+        <member name="T:Mysql.Query.Condition">
+            <summary>
+            Eine Bidinung einer Abfrage
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.Condition.type">
+            <summary>
+            Abfrage Typ
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.Condition.key">
+            <summary>
+            Der zu prüfende Schlüssel
+            </summary>
+        </member>
+        <member name="F:Mysql.Query.Condition.value">
+            <summary>
+            Der zu prüfende Wert
+            </summary>
+        </member>
+        <member name="T:Mysql.Query.QueryFaultException">
+            <summary>
+            Eine Exception, die von der QueryClass geworfen wird
+            </summary>
+        </member>
+        <member name="M:Mysql.Query.QueryFaultException.#ctor">
+            <summary>
+            Instanziiert eine neue Exception
+            </summary>
+        </member>
+        <member name="M:Mysql.Query.QueryFaultException.#ctor(System.String)">
+            <summary>
+            Instanziirt eine neue Exception
+            </summary>
+            <param name="Message">Fehler Text</param>
+        </member>
+        <member name="T:Mysql.MysqlConnection">
+            <summary>
+            Verwaltet eine Verbindung zu einer MySQL-Datenbank
+            </summary>
+        </member>
+        <member name="F:Mysql.MysqlConnection.connection">
+            <summary>
+            Die vom System verwendete Mysql Verbindung
+            </summary>
+        </member>
+        <member name="M:Mysql.MysqlConnection.connect(System.String,System.String,System.String,System.String)">
+            <summary>
+            Stellt eine Verbindung zu einer MySQL Datenbank her
+            </summary>
+            <param name="host">Hostname oder HostIP</param>
+            <param name="database">Zu verwendene Datenbank</param>
+            <param name="username">Benutzername</param>
+            <param name="password">Passwort</param>
+        </member>
+        <member name="M:Mysql.MysqlConnection.Query(Mysql.Query)">
+            <summary>
+            Führt ein Kommando auf dem SQL Server aus
+            </summary>
+            <param name="query">Query Instanz</param>
+            <returns>MysqlDataReader für das Auslesen von Querys</returns>
+        </member>
+        <member name="M:Mysql.MysqlConnection.Query(System.String)">
+            <summary>
+            Führt ein Kommando auf dem SQL Server aus
+            </summary>
+            <param name="query">SQL Query</param>
+            <returns>MysqlDataReader für das Auslesen von Querys</returns>
+        </member>
+        <member name="M:Mysql.MysqlConnection.triggerOnError(System.Exception)">
+            <summary>
+            Triggert einen Mysql Fehler
+            </summary>
+            <param name="ex">Fehler</param>
+        </member>
+        <member name="E:Mysql.MysqlConnection.OnError">
+            <summary>
+            Ein Fehler ist aufgetreten
+            </summary>
+        </member>
+        <member name="T:Mysql.MysqlConnection.MysqlErrorEventArgs">
+            <summary>
+            Mysql Fehler Event Parameter
+            </summary>
+        </member>
+        <member name="M:Mysql.MysqlConnection.MysqlErrorEventArgs.#ctor(System.Exception)">
+            <summary>
+            Erstellt eine neue Exception
+            </summary>
+            <param name="ex">Fehler</param>
+        </member>
+        <member name="M:Mysql.MysqlConnection.MysqlErrorEventArgs.getException">
+            <summary>
+            Liefert die aufgetretene Exception zurück
+            </summary>
+            <returns>Aufgetretene Exception</returns>
+        </member>
+    </members>
+</doc>

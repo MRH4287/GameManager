@@ -8,7 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 
 using Game.Game;
-using MySql;
+using Mysql;
+
 using MySql.Data.MySqlClient;
 using System.Reflection;
 using System.IO;
@@ -20,14 +21,15 @@ using GraphicLibary.Controls;
 
 namespace Game
 {
-    public partial class Form1 : Form, MysqlConnect.IMysql
+    public partial class Form1 : Form
     {
 
         // Kompontenten:
         bool connected = false;
         string ip = "127.0.0.1";
 
-        MysqlConnect.MysqlConnector mysql;
+        Mysql.MysqlConnection mysql;
+        
 
         GameData data;
 
@@ -42,7 +44,6 @@ namespace Game
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,10 +52,14 @@ namespace Game
             {
                 checkConfig();
                 ip = config["server/host"];
-                mysql = new MysqlConnect.MysqlConnector(this);
+                mysql = new Mysql.MysqlConnection();
+                mysql.OnError += new EventHandler<Mysql.MysqlConnection.MysqlErrorEventArgs>(mysql_OnError);
                 mysql.connect(ip, config["server/database"], config["server/username"], config["server/password"]);
 
                 data = new GameData(mysql, config["server/prefix"]);
+
+                Query.Prefix = config["server/prefix"];
+
                 connected = true;
                 ImageSetup();
                 InitiateGui();
@@ -73,6 +78,8 @@ namespace Game
 
 
         }
+
+
 
         private void checkConfig()
         {
@@ -747,7 +754,7 @@ namespace Game
                 }
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
                 data.Add("Name", page2_name.Text);
 
@@ -780,18 +787,20 @@ namespace Game
                     MemoryStream stream = new MemoryStream();
                     bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
 
-                    data.Add("picture", stream.GetBuffer());
+                    data.Add("picture", stream.GetBuffer().ToString());
                 }
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_ships", data, "ID", ((ShipClass)page2_select.SelectedItem).Id.ToString());
+                    Query qr = Query.Update("ships").Where("ID", ((ShipClass)page2_select.SelectedItem).Id.ToString());
+                    qr.Set(data);
+                    mysql.Query(qr);
                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_ships", data);
 
+                    Query.Insert("ships").Set(data).execute(mysql);
                 }
 
                 this.data.refreshShipClassList();
@@ -1119,7 +1128,7 @@ namespace Game
 
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
                 data.Add("Name", page3_name.Text);
 
@@ -1136,6 +1145,7 @@ namespace Game
 
                 ResList list = getResourceListFromPanel(page3_costs);
                 list.addIntoHashTable(data);
+                
 
 
                 data.Add("names", names);
@@ -1163,12 +1173,12 @@ namespace Game
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_stations", data, "ID", ((StationClass)page3_select.SelectedItem).Id.ToString());
+                    Query.Update("stations").Set(data).Where("ID", ((StationClass)page3_select.SelectedItem).Id.ToString()).execute(mysql);
                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_stations", data);
+                    Query.Insert("stations").Set(data).execute(mysql);
 
                 }
 
@@ -1407,7 +1417,7 @@ namespace Game
 
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
                 data.Add("Name", page5_name.Text);
                 data.Add("skill", page5_skill.Text);
@@ -1423,12 +1433,12 @@ namespace Game
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_skills", data, "ID", ((Skill)page5_select.SelectedItem).Id.ToString());
+                    Query.Update("skills").Set(data).Where("ID", ((Skill)page5_select.SelectedItem).Id.ToString()).execute(mysql);
                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_skills", data);
+                    Query.Insert("skills").Set(data).execute(mysql);
 
                 }
 
@@ -1614,7 +1624,7 @@ namespace Game
 
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
                 data.Add("Name", page6_name.Text);
 
@@ -1631,12 +1641,13 @@ namespace Game
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_tech", data, "ID", ((Tech)page6_select.SelectedItem).Id.ToString());
-                }
+                    Query.Update("tech").Set(data).Where("ID", ((Tech)page6_select.SelectedItem).Id.ToString()).execute(mysql); 
+                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_tech", data);
+
+                    Query.Insert("tech").Set(data).execute(mysql);
 
                 }
 
@@ -1825,7 +1836,7 @@ namespace Game
 
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
                 data.Add("Name", page7_name.Text);
 
@@ -1852,12 +1863,12 @@ namespace Game
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_update", data, "ID", ((Update)page7_select.SelectedItem).Id.ToString());
+                    Query.Update("update").Set(data).Where("ID", ((Update)page7_select.SelectedItem).Id.ToString()).execute(mysql);
                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_update", data);
+                    Query.Insert("update").Set(data).execute(mysql);
 
                 }
 
@@ -2026,7 +2037,7 @@ namespace Game
 
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
               
                 
@@ -2040,12 +2051,12 @@ namespace Game
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_planeten", data, "ID", ((PlanetClass)page8_select.SelectedItem).Id.ToString());
+                    Query.Update("planeten").Set(data).Where("ID", ((PlanetClass)page8_select.SelectedItem).Id.ToString()).execute(mysql);
                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_planeten", data);
+                    Query.Insert("planeten").Set(data).execute(mysql);
 
                 }
 
@@ -2152,19 +2163,19 @@ namespace Game
 
 
 
-                System.Collections.Hashtable data = new System.Collections.Hashtable();
+                Dictionary<string, string> data = new Dictionary<string, string>();
 
                 data.Add("name", page9_name.Text);
 
 
                 if (!addEntry)
                 {
-                    this.data.updateTable("PX_race", data, "ID", ((Race)page9_select.SelectedItem).id.ToString());
+                    Query.Update("race").Set(data).Where("ID", ((Race)page9_select.SelectedItem).id.ToString()).execute(mysql);
                 }
                 else
                 {
                     addEntry = false;
-                    this.data.addEntry("PX_race", data);
+                    Query.Insert("race").Set(data).execute(mysql);
 
                 }
 
@@ -2236,18 +2247,11 @@ namespace Game
 
 
 
-
-
-
-        #region IMysql Member
-
-        public void MYSQL_Error(Exception error)
+        void mysql_OnError(object sender, Mysql.MysqlConnection.MysqlErrorEventArgs e)
         {
-
-            MessageBox.Show(error.Message);
+            MessageBox.Show(e.getException().Message);
         }
 
-        #endregion
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
@@ -2285,6 +2289,8 @@ namespace Game
                     connected = false;
                     data = new GameData(dialog.FileName);
 
+                    Text += " - GameData Mode"; 
+                    
                     InitiateGui();
 
                 }
@@ -2302,6 +2308,9 @@ namespace Game
 
                 allesAktualisierenToolStripMenuItem_Click(this, new EventArgs());
                 InitiateGui();
+
+                string[] title = Text.Split(new string[] { " - " }, StringSplitOptions.None);
+                Text = title[0];
 
                 MessageBox.Show("Mysql-Modus gestartet");
 

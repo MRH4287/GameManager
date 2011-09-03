@@ -289,19 +289,13 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Data">
-      <HintPath>..\Lib\Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Encryption">
-      <HintPath>..\Lib\Encryption.dll</HintPath>
-    </Reference>
-    <Reference Include="GraphicLibary">
-      <HintPath>..\Lib\GraphicLibary.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mysql">
+      <HintPath>..\Lib\Mysql.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Mysql\MySql.Data.dll</HintPath>
+      <HintPath>..\Lib\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="NetworkLib">
       <HintPath>..\Lib\NetworkLib.dll</HintPath>
@@ -318,6 +312,9 @@
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="SystemLib">
+      <HintPath>..\Lib\SystemLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Action\" />
